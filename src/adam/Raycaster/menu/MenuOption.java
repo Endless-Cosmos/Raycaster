@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
+import adam.Raycaster.Raycaster;
 import adam.Raycaster.input.MouseInput;
 
 public class MenuOption {
@@ -59,6 +60,12 @@ public class MenuOption {
 		}
 		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
 		{
+			if(text == "Start")
+				Raycaster.IS_IN_PLAY = true;
+			else if(text == "Quit")
+				System.exit(0);
+			else if(text == "Resume")
+				Raycaster.IS_PAUSED = false;
 			hasBeenPressed = false;
 		}
 		alreadyPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);

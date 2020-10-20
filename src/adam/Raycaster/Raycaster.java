@@ -18,15 +18,19 @@ import adam.Raycaster.input.KeyInput;
 import adam.Raycaster.input.MouseInput;
 import adam.Raycaster.menu.MainMenu;
 import adam.Raycaster.menu.MenuOption;
+import adam.Raycaster.menu.PauseMenu;
 
 public class Raycaster extends Canvas 
 {	
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
+	public static boolean IS_IN_PLAY = false;
+	public static boolean IS_PAUSED = false;
+	private boolean timerHasStarted = false;
 	
 	private Thread thread;
-	private boolean isRunning;
+	private boolean isRunning = false;
 	private JFrame frame;
 	private Dimension d;
 	private Level level;
@@ -39,13 +43,19 @@ public class Raycaster extends Canvas
 	
 	private KeyInput keyInput = new KeyInput();
 	private MouseInput mouseInput = new MouseInput();
-
 	
 	private MenuOption mainMenuOptions[] = {
 			new MenuOption("Start", 300, 100),
 			new MenuOption("Quit", 300, 100),
-		};
+	};
+	
+	private MenuOption pauseMenuOptions[] = {
+			new MenuOption("Resume", 300, 100),
+			new MenuOption("Quit", 300, 100)
+	};
+	
 	private MainMenu mainMenu = new MainMenu(mainMenuOptions, WIDTH, HEIGHT);
+	private PauseMenu pauseMenu = new PauseMenu(pauseMenuOptions, WIDTH, HEIGHT);
 	
 	public Raycaster(int raysAmt)
 	{
@@ -127,35 +137,48 @@ public class Raycaster extends Canvas
 		}
 		Graphics g = bs.getDrawGraphics();
 		
-		screen.clear();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
-		
-		level.render(screen);
-		for(int i = 0; i < pixels.length; i++)
+		if(IS_IN_PLAY && !IS_PAUSED)
 		{
-			if( screen.pixels[i] == 0 && i < pixels.length / 2)
+			pauseMenu.hide();
+			mainMenu.hide();
+			
+			screen.clear();
+			g.setColor(Color.black);
+			g.fillRect(0, 0, WIDTH, HEIGHT);
+			
+			level.render(screen);
+			for(int i = 0; i < pixels.length; i++)
 			{
-				pixels[i] = 0xadd8e6;
+				if( screen.pixels[i] == 0 && i < pixels.length / 2)
+				{
+					pixels[i] = 0xadd8e6;
+				}
+				else if(screen.pixels[i] == 0 && i >= pixels.length / 2)
+				{
+					pixels[i] = 0x00ff00;
+				}
+				else
+				{
+					pixels[i] = screen.pixels[i];
+				}
 			}
-			else if(screen.pixels[i] == 0 && i >= pixels.length / 2)
-			{
-				pixels[i] = 0x00ff00;
-			}
-			else
-			{
-				pixels[i] = screen.pixels[i];
-			}
+			g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
+
+			g.setFont(timerFont);
+			g.drawString(level.getTimerTime(), 40, 70);
 		}
-		g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
+		else if(IS_PAUSED)
+		{
+			pauseMenu.show();
+			pauseMenu.render(g);
+		}
+		else
+		{
+			mainMenu.show();
+			mainMenu.render(g);
+		}
 		//level.render(g);
 		//player.render(g);
-		
-		g.setFont(timerFont);
-		g.drawString(level.getTimerTime(), 40, 70);
-		
-		mainMenu.show();
-		mainMenu.render(g);
 		
 		g.dispose();
 		bs.show();
@@ -163,9 +186,28 @@ public class Raycaster extends Canvas
 	
 	public void tick() 
 	{
-		mainMenu.tick();
-		player.tick(level);
-		level.tick(player);
+		if(IS_IN_PLAY && !IS_PAUSED)
+		{
+			if(!timerHasStarted)
+			{
+				level.startTimer();
+				timerHasStarted = true;
+			}
+			level.resumeTimer();
+			player.tick(level);
+			level.tick(player);
+			level.timerTick();
+		}
+		else if(IS_PAUSED)
+		{
+			pauseMenu.tick();
+			level.pauseTimer();
+			level.timerTick();
+		}
+		else
+		{
+			mainMenu.tick();
+		}
 	}
 
 	public static void main(String[] args)

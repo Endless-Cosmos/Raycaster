@@ -2,6 +2,7 @@ package adam.Raycaster;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Random;
@@ -10,6 +11,7 @@ import javax.imageio.ImageIO;
 
 import adam.Raycaster.graphics.Screen;
 import adam.Raycaster.graphics.Texture;
+import adam.Raycaster.input.KeyInput;
 
 public class Level
 {	
@@ -45,7 +47,6 @@ public class Level
 		currentPlayerTileCoords = new Vec2f(0, 0);
 		this.player = player;
 		generateMap();
-		timer.start();
 	}
 	
 	public Level(int tileSize, int wallsAmt, Player player, String filePath) 
@@ -61,7 +62,6 @@ public class Level
 		mapSquarePos = new Vec2f(0, 0);
 		currentPlayerTileCoords = new Vec2f(0, 0);
 		this.player = player;
-		timer.start();
 	}
 	
 	public void loadLevel(String filePath)
@@ -173,13 +173,35 @@ public class Level
 	
 	public void tick(Player player)
 	{
-		timer.tick();
+		if(KeyInput.getKeyState(KeyEvent.VK_SPACE))
+			Raycaster.IS_PAUSED = true;
+		
 		currentPlayerTileCoords.x = player.pos.x % tileSize;
 		currentPlayerTileCoords.y = player.pos.y % tileSize;
 		mapSquarePos.x = (int) (player.pos.x / tileSize);
 		mapSquarePos.y = (int) (player.pos.y / tileSize);
 		player.calcRays(currentPlayerTileCoords, mapSquarePos , this);
 		calcWalls(player);
+	}
+	
+	public void timerTick()
+	{
+		timer.tick();
+	}
+	
+	public void startTimer()
+	{
+		timer.start();
+	}
+	
+	public void pauseTimer()
+	{
+		timer.pause();
+	}
+	
+	public void resumeTimer()
+	{
+		timer.resume();
 	}
 	
 	public String getTimerTime()
