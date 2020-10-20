@@ -2,10 +2,12 @@ package adam.Raycaster;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+
+import adam.Raycaster.input.KeyInput;
 
 public class Player
-{
-
+{	
 	public Vec2f pos;
 	public Vec2f dir;
 	public Vec2f cameraLeft;
@@ -33,16 +35,56 @@ public class Player
 			rays[i].render(g);
 		}
 	}
-	public void tick() 
+	public void tick(Level level) 
 	{
-		move();
+		move(level);
 		for(int i = 0; i < rays.length; i++) 
 		{
 			rays[i].tick(this);
 		}
 	}
-	public void move()
+	public void move(Level level)
 	{
+		if(KeyInput.getKeyState(KeyEvent.VK_W))
+		{
+			Vec2f moveForwards = Vec2f.normalize(Vec2f.sub(dir, pos));
+			if(!collision(Vec2f.add(pos, moveForwards), level))
+			{
+				pos.add(moveForwards);
+			}
+		}
+		if(KeyInput.getKeyState(KeyEvent.VK_S)) 
+		{
+			Vec2f moveBackwards =  Vec2f.normalize(Vec2f.sub(dir, pos));
+			if(!collision(Vec2f.sub(pos, moveBackwards), level))
+			{
+				pos.sub(moveBackwards);
+			}
+		}
+		if(KeyInput.getKeyState(KeyEvent.VK_A))
+		{
+			Vec2f moveLeft = Vec2f.normalize(Vec2f.sub(cameraLeft, dir));
+			if(!collision(Vec2f.sub(pos, moveLeft), level)) 
+			{
+				pos.sub(moveLeft);
+			}
+		}
+		if(KeyInput.getKeyState(KeyEvent.VK_D)) 
+		{
+			Vec2f moveRight = Vec2f.normalize(Vec2f.sub(cameraRight, dir));
+			if(!collision(Vec2f.sub(pos, moveRight), level)) 
+			{
+				pos.sub(moveRight);
+			}
+		}
+		if(KeyInput.getKeyState(KeyEvent.VK_E))
+		{
+			angle += .1f;
+		}
+		if(KeyInput.getKeyState(KeyEvent.VK_Q))
+		{
+			angle -= .1f;
+		}
 		rotate();
 		
 	}

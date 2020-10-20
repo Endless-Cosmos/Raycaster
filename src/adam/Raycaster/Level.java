@@ -182,7 +182,7 @@ public class Level
 		calcWalls(player);
 	}
 	
-	public String geTimerTime()
+	public String getTimerTime()
 	{
 		return timer.getFormatedTime();
 	}

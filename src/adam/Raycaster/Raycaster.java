@@ -15,6 +15,9 @@ import javax.swing.JFrame;
 
 import adam.Raycaster.graphics.Screen;
 import adam.Raycaster.input.KeyInput;
+import adam.Raycaster.input.MouseInput;
+import adam.Raycaster.menu.MainMenu;
+import adam.Raycaster.menu.MenuOption;
 
 public class Raycaster extends Canvas 
 {	
@@ -28,12 +31,21 @@ public class Raycaster extends Canvas
 	private Dimension d;
 	private Level level;
 	private Player player;
-	private KeyInput keys;
 	private int raysAmt;
 	private Screen screen;
 	private BufferedImage image;
 	private int pixels[];
-	private Font font = new Font("LucidaSans", Font.BOLD, 30);
+	private Font timerFont = new Font("LucidaSans", Font.BOLD, 50);
+	
+	private KeyInput keyInput = new KeyInput();
+	private MouseInput mouseInput = new MouseInput();
+
+	
+	private MenuOption mainMenuOptions[] = {
+			new MenuOption("Start", 300, 100),
+			new MenuOption("Quit", 300, 100),
+		};
+	private MainMenu mainMenu = new MainMenu(mainMenuOptions, WIDTH, HEIGHT);
 	
 	public Raycaster(int raysAmt)
 	{
@@ -46,8 +58,10 @@ public class Raycaster extends Canvas
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 		player = new Player(20, 20, raysAmt);
 		level = new Level(15, raysAmt, player, "/maps/Level.png");
-		keys = new KeyInput(player, level);
-		addKeyListener(keys);
+		addKeyListener(keyInput);
+		addMouseMotionListener(mouseInput);
+		addMouseListener(mouseInput);
+	
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e)
 			{
@@ -136,8 +150,11 @@ public class Raycaster extends Canvas
 		//level.render(g);
 		//player.render(g);
 		
-		g.setFont(font);
-		g.drawString(level.geTimerTime(), 20, 40);
+		g.setFont(timerFont);
+		g.drawString(level.getTimerTime(), 40, 70);
+		
+		mainMenu.hide();
+		mainMenu.render(g);
 		
 		g.dispose();
 		bs.show();
@@ -145,8 +162,8 @@ public class Raycaster extends Canvas
 	
 	public void tick() 
 	{
-		keys.tick();
-		player.tick();
+		mainMenu.tick();
+		player.tick(level);
 		level.tick(player);
 	}
 

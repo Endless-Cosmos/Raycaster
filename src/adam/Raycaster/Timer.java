@@ -1,7 +1,5 @@
 package adam.Raycaster;
 
-import java.text.DecimalFormat;
-
 public class Timer
 {
 	long startTime;
@@ -13,7 +11,6 @@ public class Timer
 		startTime = System.currentTimeMillis();
 		deltaTime = startTime;
 		stopped = false;
-		System.out.println(startTime);
 	}
 	void tick()
 	{
@@ -28,9 +25,13 @@ public class Timer
 		stopped = true;
 	}
 	
+	public float getTime()
+	{
+		return deltaTime;
+	}
+	
 	String getFormatedTime()
 	{
-		System.out.println(deltaTime);
 		int timeMinutes = (int)(deltaTime / 60);
 		int timeSeconds = (int)(deltaTime % 60);
 		String minutesString = timeMinutes < 10 ? "0" + timeMinutes : timeMinutes + "";
