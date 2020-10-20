@@ -3,6 +3,7 @@ package adam.Raycaster;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -32,7 +33,7 @@ public class Raycaster extends Canvas
 	private Screen screen;
 	private BufferedImage image;
 	private int pixels[];
-
+	private Font font = new Font("LucidaSans", Font.BOLD, 30);
 	
 	public Raycaster(int raysAmt)
 	{
@@ -54,6 +55,7 @@ public class Raycaster extends Canvas
 			}
 		});
 	}
+	
 	public synchronized void start()
 	{
 		requestFocus();
@@ -88,6 +90,7 @@ public class Raycaster extends Canvas
 		});
 		thread.start();
 	}
+	
 	public synchronized void stop()
 	{
 		try
@@ -99,6 +102,7 @@ public class Raycaster extends Canvas
 			e.printStackTrace();
 		}
 	}
+	
 	public void render()
 	{
 		BufferStrategy bs = getBufferStrategy();
@@ -132,9 +136,13 @@ public class Raycaster extends Canvas
 		//level.render(g);
 		//player.render(g);
 		
+		g.setFont(font);
+		g.drawString(level.geTimerTime(), 20, 40);
+		
 		g.dispose();
 		bs.show();
 	}
+	
 	public void tick() 
 	{
 		keys.tick();

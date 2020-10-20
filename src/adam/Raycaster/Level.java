@@ -25,6 +25,8 @@ public class Level
 	private int mapImagePixels[];
 	private float rayTexCoords[];
 	private Player player;
+	private Timer timer = new Timer();
+;
 	
 	private Texture wall = Texture.wall;
 	
@@ -43,7 +45,9 @@ public class Level
 		currentPlayerTileCoords = new Vec2f(0, 0);
 		this.player = player;
 		generateMap();
+		timer.start();
 	}
+	
 	public Level(int tileSize, int wallsAmt, Player player, String filePath) 
 	{
 		loadLevel(filePath);
@@ -57,7 +61,9 @@ public class Level
 		mapSquarePos = new Vec2f(0, 0);
 		currentPlayerTileCoords = new Vec2f(0, 0);
 		this.player = player;
+		timer.start();
 	}
+	
 	public void loadLevel(String filePath)
 	{
 		try
@@ -73,6 +79,7 @@ public class Level
 			
 		}
 	}
+	
 	public void generateMap() {
 		for(int y = 0; y < height; y++)
 		{
@@ -85,6 +92,7 @@ public class Level
 			}
 		}
 	}
+	
 	public void renderWalls(Graphics g) 
 	{
 		for(int i = 0; i < wallsHeight.length; i++) 
@@ -97,6 +105,7 @@ public class Level
 			g.fillRect(i, Raycaster.HEIGHT / 2 - wallsHeight[i] , 1 , wallsHeight[i] * 2);
 		}
 	}
+	
 	public void renderWallTextures(Screen screen)
 	{
 		for(int x = 0; x < wallsHeight.length; x++)
@@ -119,6 +128,7 @@ public class Level
 	{
 		return (int) ((val - min1) / (max1 - min1) * (max2 - min2) + min2);
 	}
+	
 	public void calcWalls(Player player)
 	{
 		for(int i = 0; i < player.rays.length; i++) 
@@ -132,6 +142,7 @@ public class Level
 			wallsHeight[i] = (int) (tileSize / ray.getMag()  / 2 * projectionPlaneDist / cos);
 		}
 	}
+	
 	public void renderMap(Graphics g)
 	{
 		for(int y = 0; y < height; y++)
@@ -148,23 +159,32 @@ public class Level
 			}
 		}
 	}
+	
 	public void render(Screen screen) 
 	{
 		renderWallTextures(screen);
 	}
+	
 	public void render(Graphics g)
 	{
 		renderWalls(g);
 		renderMap(g);
 	}
+	
 	public void tick(Player player)
 	{
+		timer.tick();
 		currentPlayerTileCoords.x = player.pos.x % tileSize;
 		currentPlayerTileCoords.y = player.pos.y % tileSize;
 		mapSquarePos.x = (int) (player.pos.x / tileSize);
 		mapSquarePos.y = (int) (player.pos.y / tileSize);
 		player.calcRays(currentPlayerTileCoords, mapSquarePos , this);
 		calcWalls(player);
+	}
+	
+	public String geTimerTime()
+	{
+		return timer.getFormatedTime();
 	}
 	public int getWidth() { return width; }
 	public int getHeight() { return height; }

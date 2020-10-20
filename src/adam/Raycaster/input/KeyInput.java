@@ -24,6 +24,7 @@ public class KeyInput extends KeyAdapter
 		this.player = player;
 		this.level = level;
 	}
+	
 	public void keyPressed(KeyEvent e)
 	{
 		if(e.getKeyCode() == KeyEvent.VK_W)
@@ -51,6 +52,7 @@ public class KeyInput extends KeyAdapter
 			turnLeft = true;
 		}
 	}
+	
 	public void keyReleased(KeyEvent e) 
 	{
 		if(e.getKeyCode() == KeyEvent.VK_W) 
@@ -78,6 +80,7 @@ public class KeyInput extends KeyAdapter
 			turnLeft = false;
 		}
 	}
+	
 	public void tick()
 	{
 		if(forwards)

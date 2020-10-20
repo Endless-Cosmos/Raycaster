@@ -16,6 +16,7 @@ public class Texture
 	{
 		loadTexture(filePath);
 	}
+	
 	public void loadTexture(String filePath)
 	{
 		BufferedImage image;
