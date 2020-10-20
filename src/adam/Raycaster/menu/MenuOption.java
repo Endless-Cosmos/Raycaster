@@ -3,6 +3,7 @@ package adam.Raycaster.menu;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 
 import adam.Raycaster.input.MouseInput;
 
@@ -12,6 +13,7 @@ public class MenuOption {
 	private Rectangle rect;
 	private int width, height;
 	public boolean hasBeenPressed = false;
+	public boolean alreadyPressed  = false;
 	
 	public MenuOption(String text, int width, int height)
 	{
@@ -29,11 +31,37 @@ public class MenuOption {
 	
 	public void render(Graphics g, int stringWidth, int stringHeight)
 	{
-		g.setColor(Color.BLACK);
+		if(isHovered() && hasBeenPressed)
+			g.setColor(Color.LIGHT_GRAY);
+		else if(isHovered())
+			g.setColor(Color.WHITE);
+		else
+			g.setColor(Color.BLACK);
 		g.fillRect(rect.x, rect.y, rect.width, rect.height);
-		g.setColor(Color.WHITE);
+		if(isHovered())
+			g.setColor(Color.BLACK);
+		else 
+			g.setColor(Color.WHITE);
 		g.drawString(text, (rect.x + rect.width / 2) - stringWidth / 2, 
 				(rect.y + rect.height / 2) + stringHeight / 4);
+	}
+	
+	public void tick()
+	{
+		boolean isLeftButtonPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);
+		if(isHovered() && isLeftButtonPressed && !hasBeenPressed && !alreadyPressed)
+		{
+			hasBeenPressed = true;
+		}
+		if(!isHovered())
+		{
+			hasBeenPressed = false;
+		}
+		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
+		{
+			hasBeenPressed = false;
+		}
+		alreadyPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);
 	}
 	
 	public boolean isHovered()

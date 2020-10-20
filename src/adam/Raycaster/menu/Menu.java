@@ -54,6 +54,16 @@ public abstract class  Menu
 		return isVisible;
 	}
 	
-	public abstract void tick();
+	public void tick()
+	{
+		if(isVisible)
+		{
+			
+			for(int i = 0; i < options.length; i++)
+			{				
+				options[i].tick();
+			}
+		}
+	}
 
 }

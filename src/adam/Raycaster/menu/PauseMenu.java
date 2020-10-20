@@ -7,14 +7,4 @@ public class PauseMenu extends Menu {
 		super(options, screenWidth, screenHeight);
 	}
 	
-	@Override
-	public void tick()
-	{
-		if(isVisible)
-		{
-			
-		}
-	}
-
-	
 }

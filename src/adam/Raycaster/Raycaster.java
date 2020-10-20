@@ -63,6 +63,7 @@ public class Raycaster extends Canvas
 		addMouseListener(mouseInput);
 	
 		frame.addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent e)
 			{
 				isRunning = false;
@@ -153,7 +154,7 @@ public class Raycaster extends Canvas
 		g.setFont(timerFont);
 		g.drawString(level.getTimerTime(), 40, 70);
 		
-		mainMenu.hide();
+		mainMenu.show();
 		mainMenu.render(g);
 		
 		g.dispose();
