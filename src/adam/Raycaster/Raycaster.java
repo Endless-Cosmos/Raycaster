@@ -25,8 +25,8 @@ public class Raycaster extends Canvas
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
-	public static boolean IS_IN_PLAY = false;
-	public static boolean IS_PAUSED = false;
+	public  boolean isInPlay = false;
+	public  boolean isPaused = false;
 	private boolean timerHasStarted = false;
 	
 	private Thread thread;
@@ -46,8 +46,9 @@ public class Raycaster extends Canvas
 	
 	private MenuOption mainMenuOptions[] = {
 			new MenuOption("Start", 300, 100),
-			new MenuOption("Quit", 300, 100),
+			new MenuOption("Exit", 300, 100),
 	};
+	private Color mainMenuColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 	
 	private MenuOption pauseMenuOptions[] = {
 			new MenuOption("Resume", 300, 100),
@@ -66,8 +67,7 @@ public class Raycaster extends Canvas
 		screen = new Screen(WIDTH, HEIGHT);
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		player = new Player(20, 20, raysAmt);
-		level = new Level(15, raysAmt, player, "/maps/Level.png");
+		startGame();
 		addKeyListener(keyInput);
 		addMouseMotionListener(mouseInput);
 		addMouseListener(mouseInput);
@@ -128,6 +128,13 @@ public class Raycaster extends Canvas
 		}
 	}
 	
+	public void startGame()
+	{
+		player = new Player(20, 20, raysAmt);
+		level = new Level(15, raysAmt, player, "/maps/Level.png");
+		timerHasStarted = false;
+	}
+	
 	public void render()
 	{
 		BufferStrategy bs = getBufferStrategy();
@@ -137,7 +144,7 @@ public class Raycaster extends Canvas
 		}
 		Graphics g = bs.getDrawGraphics();
 		
-		if(IS_IN_PLAY && !IS_PAUSED)
+		if(isInPlay && !isPaused)
 		{
 			pauseMenu.hide();
 			mainMenu.hide();
@@ -167,15 +174,15 @@ public class Raycaster extends Canvas
 			g.setFont(timerFont);
 			g.drawString(level.getTimerTime(), 40, 70);
 		}
-		else if(IS_PAUSED)
+		else if(isPaused)
 		{
 			pauseMenu.show();
-			pauseMenu.render(g);
+			pauseMenu.render(g, null);
 		}
 		else
 		{
 			mainMenu.show();
-			mainMenu.render(g);
+			mainMenu.render(g, mainMenuColor);
 		}
 		//level.render(g);
 		//player.render(g);
@@ -186,7 +193,7 @@ public class Raycaster extends Canvas
 	
 	public void tick() 
 	{
-		if(IS_IN_PLAY && !IS_PAUSED)
+		if(isInPlay && !isPaused)
 		{
 			if(!timerHasStarted)
 			{
@@ -195,18 +202,18 @@ public class Raycaster extends Canvas
 			}
 			level.resumeTimer();
 			player.tick(level);
-			level.tick(player);
+			level.tick(player, this);
 			level.timerTick();
 		}
-		else if(IS_PAUSED)
+		else if(isPaused)
 		{
-			pauseMenu.tick();
+			pauseMenu.tick(this);
 			level.pauseTimer();
 			level.timerTick();
 		}
 		else
 		{
-			mainMenu.tick();
+			mainMenu.tick(this);
 		}
 	}
 

@@ -1,11 +1,11 @@
 package adam.Raycaster.menu;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-import adam.Raycaster.input.MouseInput;
+import adam.Raycaster.Raycaster;
 
 public abstract class  Menu
 {
@@ -36,10 +36,15 @@ public abstract class  Menu
 	
 	public void hide() { isVisible = false; }
 	
-	public void render(Graphics g)
+	public void render(Graphics g, Color background)
 	{
 		if(isVisible)
 		{
+			if(background != null)
+			{
+				g.setColor(background);
+				g.fillRect(0, 0, Raycaster.WIDTH, Raycaster.HEIGHT);
+			}
 			g.setFont(font);
 			for(int i = 0; i < options.length; i++)
 			{
@@ -54,14 +59,14 @@ public abstract class  Menu
 		return isVisible;
 	}
 	
-	public void tick()
+	public void tick(Raycaster game)
 	{
 		if(isVisible)
 		{
 			
 			for(int i = 0; i < options.length; i++)
 			{				
-				options[i].tick();
+				options[i].tick(game);
 			}
 		}
 	}

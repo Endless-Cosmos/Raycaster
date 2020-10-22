@@ -171,10 +171,10 @@ public class Level
 		renderMap(g);
 	}
 	
-	public void tick(Player player)
+	public void tick(Player player, Raycaster game)
 	{
 		if(KeyInput.getKeyState(KeyEvent.VK_SPACE))
-			Raycaster.IS_PAUSED = true;
+			game.isPaused = true;
 		
 		currentPlayerTileCoords.x = player.pos.x % tileSize;
 		currentPlayerTileCoords.y = player.pos.y % tileSize;
@@ -208,6 +208,7 @@ public class Level
 	{
 		return timer.getFormatedTime();
 	}
+	
 	public int getWidth() { return width; }
 	public int getHeight() { return height; }
 }

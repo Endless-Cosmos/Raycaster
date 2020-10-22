@@ -47,7 +47,7 @@ public class MenuOption {
 				(rect.y + rect.height / 2) + stringHeight / 4);
 	}
 	
-	public void tick()
+	public void tick(Raycaster game)
 	{
 		boolean isLeftButtonPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);
 		if(isHovered() && isLeftButtonPressed && !hasBeenPressed && !alreadyPressed)
@@ -61,12 +61,28 @@ public class MenuOption {
 		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
 		{
 			if(text == "Start")
-				Raycaster.IS_IN_PLAY = true;
-			else if(text == "Quit")
+			{
+				game.startGame();
+				game.isInPlay = true;
+				hasBeenPressed = false;
+
+			}
+			else if(text == "Exit")
+			{
 				System.exit(0);
+			}
 			else if(text == "Resume")
-				Raycaster.IS_PAUSED = false;
-			hasBeenPressed = false;
+			{
+				game.isPaused = false;
+				hasBeenPressed = false;
+			}
+			else if(text == "Quit")
+			{
+				game.isInPlay = false;
+				game.isPaused = false;
+				hasBeenPressed = false;
+
+			}
 		}
 		alreadyPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);
 	}
