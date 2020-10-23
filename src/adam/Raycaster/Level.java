@@ -26,12 +26,13 @@ public class Level
 	public Vec2f mapSquarePos;
 	private int mapImagePixels[];
 	private float rayTexCoords[];
+	private Vec2i rayMapCoords[];
 	private Player player;
 	private Timer timer = new Timer();
-;
-	
+
 	private Texture wall = Texture.wall;
-	
+	private Texture end = Texture.end;
+	private Texture at = null;
 	
 	public Level(int width, int height, int tileSize, Player player, int wallsAmt) 
 	{
@@ -42,6 +43,9 @@ public class Level
 		mapTiles = new MapTile[width  * height];
 		this.wallsAmt = wallsAmt;
 		rayTexCoords = new float[wallsAmt];
+		rayMapCoords = new Vec2i[wallsAmt];
+		for(int i = 0; i < rayMapCoords.length; i++)
+			rayMapCoords[i] = new Vec2i();
 		wallsHeight = new int[wallsAmt];
 		mapSquarePos = new Vec2f(0, 0);
 		currentPlayerTileCoords = new Vec2f(0, 0);
@@ -57,6 +61,9 @@ public class Level
 		mapTiles = new MapTile[width  * height];
 		this.wallsAmt = wallsAmt;
 		rayTexCoords = new float[wallsAmt];
+		rayMapCoords = new Vec2i[wallsAmt];
+		for(int i = 0; i < rayMapCoords.length; i++)
+			rayMapCoords[i] = new Vec2i();
 		wallsHeight = new int[wallsAmt];
 		generateMap();
 		mapSquarePos = new Vec2f(0, 0);
@@ -86,9 +93,9 @@ public class Level
 			for(int x = 0; x < width; x++) 
 			{
 				if(mapImagePixels[x + y * width] == 0xffffffff)
-				{
 					map[x + y * width] = 1;
-				}
+				else if(mapImagePixels[x + y * width] == 0x000000ff)
+					map[x + y * width] = 2;
 			}
 		}
 	}
@@ -110,15 +117,19 @@ public class Level
 	{
 		for(int x = 0; x < wallsHeight.length; x++)
 		{
+			if(rayMapCoords[x].x == 30 && rayMapCoords[x].y == 30)
+				at = end;
+			else
+				at = wall;
 			int yy = Raycaster.HEIGHT / 2 - 1;
 			for(int y = Raycaster.HEIGHT / 2; y < wallsHeight[x] + Raycaster.HEIGHT / 2; y++)
 			{
-				if(y > Raycaster.HEIGHT - 1 || yy < 0)  break;
+				if(y > Raycaster.HEIGHT - 1 || yy < 0)  break;	
 				int xPix = mapRange(rayTexCoords[x], 0, tileSize, 0, 64) + 1;
 				int yPix = mapRange(y, Raycaster.HEIGHT / 2, wallsHeight[x] + Raycaster.HEIGHT / 2, 32, 64);
 				int yyPix = mapRange(yy, Raycaster.HEIGHT / 2, -wallsHeight[x] + Raycaster.HEIGHT / 2, 32, 0);
-				screen.pixels[x + y * Raycaster.WIDTH] = wall.pixels[(xPix & wall.size - 1) + (yPix & wall.size - 1) * wall.size];
-				screen.pixels[x  + yy * Raycaster.WIDTH] = wall.pixels[(xPix & wall.size - 1) + (yyPix & wall.size- 1) * wall.size];
+				screen.pixels[x + y * Raycaster.WIDTH] = at.pixels[(xPix & at.size - 1) + (yPix & at.size - 1) * at.size];
+				screen.pixels[x  + yy * Raycaster.WIDTH] = at.pixels[(xPix & at.size - 1) + (yyPix & at.size- 1) * at.size];
 				yy--;
 			}
 		}
@@ -138,7 +149,11 @@ public class Level
 						
 			float projectionPlaneDist = (float) (Raycaster.WIDTH / 2);
 			float cos = (float) Math.cos(player.rays[i].angle - player.angle);
-			rayTexCoords[i] = player.rays[i].touchingVert ? player.rays[i].dir.y % tileSize : player.rays[i].dir.x % tileSize;
+			float rayDirX = player.rays[i].dir.x;
+			float rayDirY = player.rays[i].dir.y;
+			rayTexCoords[i] = player.rays[i].touchingVert ? rayDirY % tileSize : rayDirX % tileSize;
+			rayMapCoords[i].x = (int)((rayDirX / tileSize) - 0.0001f);
+			rayMapCoords[i].y = (int)((rayDirY / tileSize) + 0.0001f);
 			wallsHeight[i] = (int) (tileSize / ray.getMag()  / 2 * projectionPlaneDist / cos);
 		}
 	}
@@ -167,7 +182,7 @@ public class Level
 	
 	public void render(Graphics g)
 	{
-		renderWalls(g);
+		//renderWalls(g);
 		renderMap(g);
 	}
 	

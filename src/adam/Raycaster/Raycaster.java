@@ -184,8 +184,8 @@ public class Raycaster extends Canvas
 			mainMenu.show();
 			mainMenu.render(g, mainMenuColor);
 		}
-		//level.render(g);
-		//player.render(g);
+		level.render(g);
+		player.render(g);
 		
 		g.dispose();
 		bs.show();

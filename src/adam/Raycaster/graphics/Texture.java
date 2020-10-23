@@ -11,6 +11,7 @@ public class Texture
 	public int size;
 	
 	public static Texture wall = new Texture("/textures/Wall.png");
+	public static Texture end = new Texture("/textures/End.png");
 	
 	private Texture(String filePath)
 	{
