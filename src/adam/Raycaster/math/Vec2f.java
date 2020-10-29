@@ -1,4 +1,4 @@
-package adam.Raycaster;
+package adam.Raycaster.math;
 
 import java.awt.Color;
 import java.awt.Graphics;

@@ -12,9 +12,11 @@ import javax.imageio.ImageIO;
 import adam.Raycaster.graphics.Screen;
 import adam.Raycaster.graphics.Texture;
 import adam.Raycaster.input.KeyInput;
+import adam.Raycaster.math.Vec2f;
+import adam.Raycaster.math.Vec2i;
 
 public class Level
-{	
+{		
 	public int map[];
 	private int width;
 	private int height;
@@ -29,7 +31,7 @@ public class Level
 	private float rayTexCoords[];
 	private Vec2i rayMapCoords[];
 	private Timer timer = new Timer();
-
+	
 	private Texture wall = Texture.wall;
 	private Texture end = Texture.end;
 	private Texture at = null;

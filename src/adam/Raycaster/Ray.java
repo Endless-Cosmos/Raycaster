@@ -2,6 +2,8 @@ package adam.Raycaster;
 
 import java.awt.Graphics;
 
+import adam.Raycaster.math.Vec2f;
+
 public class Ray 
 {
 	

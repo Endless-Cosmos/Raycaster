@@ -22,6 +22,8 @@ import adam.Raycaster.menu.PauseMenu;
 
 public class Raycaster extends Canvas 
 {	
+	public static final boolean DEBUG = false;
+	
 	private static final long serialVersionUID = 1L;
 	public static final int WIDTH = 800;
 	public static final int HEIGHT = 600;
@@ -178,9 +180,11 @@ public class Raycaster extends Canvas
 			mainMenu.show();
 			mainMenu.render(g, mainMenuColor);
 		}
-		level.render(g);
-		player.render(g);
-		
+		if(DEBUG)
+		{
+			level.render(g);
+			player.render(g);
+		}
 		g.dispose();
 		bs.show();
 	}

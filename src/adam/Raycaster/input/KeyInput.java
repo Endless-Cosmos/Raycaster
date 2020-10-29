@@ -6,7 +6,7 @@ import java.util.BitSet;
 
 import adam.Raycaster.Level;
 import adam.Raycaster.Player;
-import adam.Raycaster.Vec2f;
+import adam.Raycaster.math.Vec2f;
 
 public class KeyInput extends KeyAdapter 
 {

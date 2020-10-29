@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 import adam.Raycaster.input.KeyInput;
+import adam.Raycaster.math.Vec2f;
+import adam.Raycaster.math.Vec2i;
 
 public class Player
 {	
