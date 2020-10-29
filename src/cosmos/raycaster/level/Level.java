@@ -1,14 +1,14 @@
-package cosmos.raycaster;
+package cosmos.raycaster.level;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
+import cosmos.raycaster.Raycaster;
 import cosmos.raycaster.graphics.Screen;
 import cosmos.raycaster.graphics.Texture;
 import cosmos.raycaster.input.KeyInput;
@@ -23,7 +23,6 @@ public class Level
 	public static int tileSize;
 	public MapTile[] mapTiles;
 	private int[] wallsHeight;
-	private int wallsAmt;
 	private Vec2f currentPlayerTileCoords;
 	public Vec2i mapSquarePos;
 	public Vec2i winPos = new Vec2i(Integer.MAX_VALUE, Integer.MAX_VALUE);
@@ -43,7 +42,6 @@ public class Level
 		height = height / tileSize;
 		map = new int[width * height];
 		mapTiles = new MapTile[width  * height];
-		this.wallsAmt = wallsAmt;
 		rayTexCoords = new float[wallsAmt];
 		rayMapCoords = new Vec2i[wallsAmt];
 		for(int i = 0; i < rayMapCoords.length; i++)
@@ -60,7 +58,6 @@ public class Level
 		Level.tileSize = tileSize;
 		map = new int[width * height];
 		mapTiles = new MapTile[width  * height];
-		this.wallsAmt = wallsAmt;
 		rayTexCoords = new float[wallsAmt];
 		rayMapCoords = new Vec2i[wallsAmt];
 		for(int i = 0; i < rayMapCoords.length; i++)

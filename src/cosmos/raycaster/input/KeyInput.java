@@ -4,8 +4,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.BitSet;
 
-import cosmos.raycaster.Level;
-import cosmos.raycaster.Player;
+import cosmos.raycaster.level.Level;
+import cosmos.raycaster.level.Player;
 import cosmos.raycaster.math.Vec2f;
 
 public class KeyInput extends KeyAdapter 

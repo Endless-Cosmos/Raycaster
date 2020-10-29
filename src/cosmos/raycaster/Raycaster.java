@@ -16,6 +16,8 @@ import javax.swing.JFrame;
 import cosmos.raycaster.graphics.Screen;
 import cosmos.raycaster.input.KeyInput;
 import cosmos.raycaster.input.MouseInput;
+import cosmos.raycaster.level.Level;
+import cosmos.raycaster.level.Player;
 import cosmos.raycaster.menu.MainMenu;
 import cosmos.raycaster.menu.MenuOption;
 import cosmos.raycaster.menu.PauseMenu;

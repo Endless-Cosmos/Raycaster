@@ -1,4 +1,4 @@
-package cosmos.raycaster;
+package cosmos.raycaster.level;
 
 import java.awt.Color;
 import java.awt.Graphics;
