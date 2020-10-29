@@ -157,17 +157,11 @@ public class Raycaster extends Canvas
 			for(int i = 0; i < pixels.length; i++)
 			{
 				if( screen.pixels[i] == 0 && i < pixels.length / 2)
-				{
 					pixels[i] = 0xadd8e6;
-				}
 				else if(screen.pixels[i] == 0 && i >= pixels.length / 2)
-				{
 					pixels[i] = 0x00ff00;
-				}
 				else
-				{
 					pixels[i] = screen.pixels[i];
-				}
 			}
 			g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
 
@@ -204,6 +198,8 @@ public class Raycaster extends Canvas
 			player.tick(level);
 			level.tick(player, this);
 			level.timerTick();
+			if(level.checkWin(player))
+				isInPlay = false;
 		}
 		else if(isPaused)
 		{

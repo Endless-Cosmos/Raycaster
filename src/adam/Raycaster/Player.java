@@ -13,7 +13,8 @@ public class Player
 	public Vec2f cameraLeft;
 	public Vec2f cameraRight;
 	public float angle = 0f;
-	public Ray[] rays; 
+	public Ray[] rays;
+	public Vec2i mapPos;
 	
 	public Player(float x, float y, int raysAmt) 
 	{
@@ -114,7 +115,7 @@ public class Player
 			rays[i] = new Ray(this, 1, 0, slope);
 		}
 	}
-	public void calcRays(Vec2f playerTileCoords, Vec2f mapSquarePos, Level level) 
+	public void calcRays(Vec2f playerTileCoords, Vec2i mapSquarePos, Level level) 
 	{
 		for(int i = 0; i < rays.length; i++)
 		{
@@ -138,10 +139,10 @@ public class Player
 			}
 		}	
 	}
-	public float horizontalIntercepts(Vec2f playerTileCoords, Vec2f mapSquarePos, Level level, Vec2f ray, float slope) 
+	public float horizontalIntercepts(Vec2f playerTileCoords, Vec2i mapSquarePos, Level level, Vec2f ray, float slope) 
 	{
-		int yCoord = (int) mapSquarePos.y;
-		int initialXCoord = (int) mapSquarePos.x; 
+		int yCoord = mapSquarePos.y;
+		int initialXCoord = mapSquarePos.x; 
 		float xOffset;
 		int xCoord = initialXCoord;
 		float initialYIntercept;
@@ -201,10 +202,10 @@ public class Player
 		}
 		return xDist * xDist + yDist * yDist;
 	}
-	public float verticalIntercepts(Vec2f playerTileCoords, Vec2f mapSquarePos, Level level, Vec2f ray, float slope) 
+	public float verticalIntercepts(Vec2f playerTileCoords, Vec2i mapSquarePos, Level level, Vec2f ray, float slope) 
 	{
-		int xCoord = (int) mapSquarePos.x;
-		int initialYCoord = (int) mapSquarePos.y;
+		int xCoord = mapSquarePos.x;
+		int initialYCoord = mapSquarePos.y;
 		int yCoord = initialYCoord;
 		float yOffset;
 		float initialXIntercept;

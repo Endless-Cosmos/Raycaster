@@ -23,11 +23,11 @@ public class Level
 	private int[] wallsHeight;
 	private int wallsAmt;
 	private Vec2f currentPlayerTileCoords;
-	public Vec2f mapSquarePos;
+	public Vec2i mapSquarePos;
+	public Vec2i winPos = new Vec2i(Integer.MAX_VALUE, Integer.MAX_VALUE);
 	private int mapImagePixels[];
 	private float rayTexCoords[];
 	private Vec2i rayMapCoords[];
-	private Player player;
 	private Timer timer = new Timer();
 
 	private Texture wall = Texture.wall;
@@ -47,9 +47,8 @@ public class Level
 		for(int i = 0; i < rayMapCoords.length; i++)
 			rayMapCoords[i] = new Vec2i();
 		wallsHeight = new int[wallsAmt];
-		mapSquarePos = new Vec2f(0, 0);
+		mapSquarePos = new Vec2i(0, 0);
 		currentPlayerTileCoords = new Vec2f(0, 0);
-		this.player = player;
 		generateMap();
 	}
 	
@@ -66,9 +65,8 @@ public class Level
 			rayMapCoords[i] = new Vec2i();
 		wallsHeight = new int[wallsAmt];
 		generateMap();
-		mapSquarePos = new Vec2f(0, 0);
+		mapSquarePos = new Vec2i(0, 0);
 		currentPlayerTileCoords = new Vec2f(0, 0);
-		this.player = player;
 	}
 	
 	public void loadLevel(String filePath)
@@ -83,7 +81,7 @@ public class Level
 		}
 		catch(IOException e)
 		{
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -94,10 +92,17 @@ public class Level
 			{
 				if(mapImagePixels[x + y * width] == 0xffffffff)
 					map[x + y * width] = 1;
-				else if(mapImagePixels[x + y * width] == 0x000000ff)
-					map[x + y * width] = 2;
+				else if(mapImagePixels[x + y * width] == 0xffff00ff)
+					winPos = new Vec2i(x, y);
 			}
 		}
+	}
+	
+	public boolean checkWin(Player player)
+	{
+		if(mapSquarePos.x == winPos.x && mapSquarePos.y == winPos.y)
+			return true;
+		return false;
 	}
 	
 	public void renderWalls(Graphics g) 
