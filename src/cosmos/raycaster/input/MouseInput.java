@@ -1,4 +1,4 @@
-package adam.Raycaster.input;
+package cosmos.raycaster.input;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

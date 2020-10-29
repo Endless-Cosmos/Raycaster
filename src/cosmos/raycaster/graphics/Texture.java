@@ -1,4 +1,4 @@
-package adam.Raycaster.graphics;
+package cosmos.raycaster.graphics;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

@@ -1,11 +1,11 @@
-package adam.Raycaster.menu;
+package cosmos.raycaster.menu;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-import adam.Raycaster.Raycaster;
+import cosmos.raycaster.Raycaster;
 
 public abstract class  Menu
 {

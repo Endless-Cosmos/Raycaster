@@ -1,4 +1,4 @@
-package adam.Raycaster;
+package cosmos.raycaster;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,11 +9,11 @@ import java.util.Random;
 
 import javax.imageio.ImageIO;
 
-import adam.Raycaster.graphics.Screen;
-import adam.Raycaster.graphics.Texture;
-import adam.Raycaster.input.KeyInput;
-import adam.Raycaster.math.Vec2f;
-import adam.Raycaster.math.Vec2i;
+import cosmos.raycaster.graphics.Screen;
+import cosmos.raycaster.graphics.Texture;
+import cosmos.raycaster.input.KeyInput;
+import cosmos.raycaster.math.Vec2f;
+import cosmos.raycaster.math.Vec2i;
 
 public class Level
 {		

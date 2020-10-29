@@ -1,4 +1,4 @@
-package adam.Raycaster.menu;
+package cosmos.raycaster.menu;
 
 public class PauseMenu extends Menu {
 

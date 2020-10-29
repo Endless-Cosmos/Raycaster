@@ -1,4 +1,4 @@
-package adam.Raycaster.menu;
+package cosmos.raycaster.menu;
 
 public class MainMenu extends Menu {
 

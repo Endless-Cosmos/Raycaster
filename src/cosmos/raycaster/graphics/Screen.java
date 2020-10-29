@@ -1,4 +1,4 @@
-package adam.Raycaster.graphics;
+package cosmos.raycaster.graphics;
 
 public class Screen {
 

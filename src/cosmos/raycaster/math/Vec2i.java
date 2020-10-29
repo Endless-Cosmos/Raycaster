@@ -1,4 +1,4 @@
-package adam.Raycaster.math;
+package cosmos.raycaster.math;
 
 public class Vec2i {
 

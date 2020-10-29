@@ -1,4 +1,4 @@
-package adam.Raycaster;
+package cosmos.raycaster;
 
 import java.awt.Canvas;
 import java.awt.Color;
@@ -13,12 +13,12 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import adam.Raycaster.graphics.Screen;
-import adam.Raycaster.input.KeyInput;
-import adam.Raycaster.input.MouseInput;
-import adam.Raycaster.menu.MainMenu;
-import adam.Raycaster.menu.MenuOption;
-import adam.Raycaster.menu.PauseMenu;
+import cosmos.raycaster.graphics.Screen;
+import cosmos.raycaster.input.KeyInput;
+import cosmos.raycaster.input.MouseInput;
+import cosmos.raycaster.menu.MainMenu;
+import cosmos.raycaster.menu.MenuOption;
+import cosmos.raycaster.menu.PauseMenu;
 
 public class Raycaster extends Canvas 
 {	

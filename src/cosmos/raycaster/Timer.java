@@ -1,4 +1,4 @@
-package adam.Raycaster;
+package cosmos.raycaster;
 
 public class Timer
 {

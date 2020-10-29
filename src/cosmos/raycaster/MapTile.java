@@ -1,9 +1,9 @@
-package adam.Raycaster;
+package cosmos.raycaster;
 
 import java.awt.Color;
 import java.awt.Graphics;
 
-import adam.Raycaster.math.Vec2f;
+import cosmos.raycaster.math.Vec2f;
 
 public class MapTile 
 {

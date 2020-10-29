@@ -1,12 +1,12 @@
-package adam.Raycaster.input;
+package cosmos.raycaster.input;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.BitSet;
 
-import adam.Raycaster.Level;
-import adam.Raycaster.Player;
-import adam.Raycaster.math.Vec2f;
+import cosmos.raycaster.Level;
+import cosmos.raycaster.Player;
+import cosmos.raycaster.math.Vec2f;
 
 public class KeyInput extends KeyAdapter 
 {

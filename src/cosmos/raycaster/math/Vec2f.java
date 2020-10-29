@@ -1,4 +1,4 @@
-package adam.Raycaster.math;
+package cosmos.raycaster.math;
 
 import java.awt.Color;
 import java.awt.Graphics;

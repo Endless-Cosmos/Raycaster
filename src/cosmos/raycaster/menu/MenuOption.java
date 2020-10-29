@@ -1,12 +1,12 @@
-package adam.Raycaster.menu;
+package cosmos.raycaster.menu;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import adam.Raycaster.Raycaster;
-import adam.Raycaster.input.MouseInput;
+import cosmos.raycaster.Raycaster;
+import cosmos.raycaster.input.MouseInput;
 
 public class MenuOption {
 
