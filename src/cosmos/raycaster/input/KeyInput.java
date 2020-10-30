@@ -4,10 +4,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.BitSet;
 
-import cosmos.raycaster.level.Level;
-import cosmos.raycaster.level.Player;
-import cosmos.raycaster.math.Vec2f;
-
 public class KeyInput extends KeyAdapter 
 {
 	private static BitSet keyStates = new BitSet(70000);

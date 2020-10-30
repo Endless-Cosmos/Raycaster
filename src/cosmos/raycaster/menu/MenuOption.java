@@ -60,23 +60,23 @@ public class MenuOption {
 		}
 		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
 		{
-			if(text == "Start")
+			if(text.equals("Start"))
 			{
 				game.startGame();
 				game.isInPlay = true;
 				hasBeenPressed = false;
 
 			}
-			else if(text == "Exit")
+			else if(text.equals("Exit"))
 			{
 				System.exit(0);
 			}
-			else if(text == "Resume")
+			else if(text.equals("Resume"))
 			{
 				game.isPaused = false;
 				hasBeenPressed = false;
 			}
-			else if(text == "Quit")
+			else if(text.equals("Quit"))
 			{
 				game.isInPlay = false;
 				game.isPaused = false;
