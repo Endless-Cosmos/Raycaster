@@ -15,9 +15,11 @@ public class MenuOption {
 	private int width, height;
 	public boolean hasBeenPressed = false;
 	public boolean alreadyPressed  = false;
+	private Callback callback;
 	
-	public MenuOption(String text, int width, int height)
+	public MenuOption(String text, int width, int height, Callback callback)
 	{
+		this.callback = callback;
 		this.width = width;
 		this.height = height;
 		this.text = text;
@@ -60,29 +62,9 @@ public class MenuOption {
 		}
 		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
 		{
-			if(text.equals("Start"))
-			{
-				game.startGame();
-				game.isInPlay = true;
-				hasBeenPressed = false;
+			callback.callback();
+			hasBeenPressed = false;
 
-			}
-			else if(text.equals("Exit"))
-			{
-				System.exit(0);
-			}
-			else if(text.equals("Resume"))
-			{
-				game.isPaused = false;
-				hasBeenPressed = false;
-			}
-			else if(text.equals("Quit"))
-			{
-				game.isInPlay = false;
-				game.isPaused = false;
-				hasBeenPressed = false;
-
-			}
 		}
 		alreadyPressed = MouseInput.getButtonState(MouseEvent.BUTTON1);
 	}

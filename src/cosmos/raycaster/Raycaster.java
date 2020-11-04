@@ -49,15 +49,15 @@ public class Raycaster extends Canvas
 	private MouseInput mouseInput = new MouseInput();
 	
 	private MenuOption mainMenuOptions[] = {
-			new MenuOption("Start", 300, 100),
-			new MenuOption("Exit", 300, 100),
+			new MenuOption("Start", 300, 100, () -> { startGame(); isInPlay = true;}),
+			new MenuOption("Exit", 300, 100, () ->  { System.exit(0); })
 	};
 	private Color mainMenuColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 	
 	private MenuOption pauseMenuOptions[] = {
-			new MenuOption("Resume", 300, 100),
-			new MenuOption("Quit", 300, 100)
-	};
+			new MenuOption("Resume", 300, 100, () ->  { isPaused = false; }),
+			new MenuOption("Quit", 300, 100, () ->   { isInPlay = false; isPaused = false; })
+			};
 	
 	private MainMenu mainMenu = new MainMenu(mainMenuOptions, WIDTH, HEIGHT);
 	private PauseMenu pauseMenu = new PauseMenu(pauseMenuOptions, WIDTH, HEIGHT);
