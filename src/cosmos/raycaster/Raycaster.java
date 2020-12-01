@@ -18,9 +18,8 @@ import cosmos.raycaster.input.KeyInput;
 import cosmos.raycaster.input.MouseInput;
 import cosmos.raycaster.level.Level;
 import cosmos.raycaster.level.Player;
-import cosmos.raycaster.menu.MainMenu;
+import cosmos.raycaster.menu.Menu;
 import cosmos.raycaster.menu.MenuOption;
-import cosmos.raycaster.menu.PauseMenu;
 
 public class Raycaster extends Canvas 
 {	
@@ -49,7 +48,7 @@ public class Raycaster extends Canvas
 	private MouseInput mouseInput = new MouseInput();
 	
 	private MenuOption mainMenuOptions[] = {
-			new MenuOption("Start", 300, 100, () -> { startGame(); isInPlay = true;}),
+			new MenuOption("Start", 300, 100, this::startGame),
 			new MenuOption("Exit", 300, 100, () ->  { System.exit(0); })
 	};
 	private Color mainMenuColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
@@ -59,8 +58,8 @@ public class Raycaster extends Canvas
 			new MenuOption("Quit", 300, 100, () ->   { isInPlay = false; isPaused = false; })
 			};
 	
-	private MainMenu mainMenu = new MainMenu(mainMenuOptions, WIDTH, HEIGHT);
-	private PauseMenu pauseMenu = new PauseMenu(pauseMenuOptions, WIDTH, HEIGHT);
+	private Menu mainMenu = new Menu(mainMenuOptions, WIDTH, HEIGHT);
+	private Menu pauseMenu = new Menu(pauseMenuOptions, WIDTH, HEIGHT);
 	
 	public Raycaster(int raysAmt)
 	{
@@ -71,7 +70,6 @@ public class Raycaster extends Canvas
 		screen = new Screen(WIDTH, HEIGHT);
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
-		startGame();
 		addKeyListener(keyInput);
 		addMouseMotionListener(mouseInput);
 		addMouseListener(mouseInput);
@@ -137,6 +135,7 @@ public class Raycaster extends Canvas
 		player = new Player(20, 20, raysAmt);
 		level = new Level(15, raysAmt, player, "/maps/Level.png");
 		timerHasStarted = false;
+		isInPlay = true;
 	}
 	
 	public void render()

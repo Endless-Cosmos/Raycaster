@@ -15,11 +15,11 @@ public class MenuOption {
 	private int width, height;
 	public boolean hasBeenPressed = false;
 	public boolean alreadyPressed  = false;
-	private Callback callback;
+	private MethodRef methodRef;
 	
-	public MenuOption(String text, int width, int height, Callback callback)
+	public MenuOption(String text, int width, int height, MethodRef methodRef)
 	{
-		this.callback = callback;
+		this.methodRef = methodRef;
 		this.width = width;
 		this.height = height;
 		this.text = text;
@@ -62,7 +62,7 @@ public class MenuOption {
 		}
 		if(isHovered() && !isLeftButtonPressed && hasBeenPressed)
 		{
-			callback.callback();
+			methodRef.func();
 			hasBeenPressed = false;
 
 		}
@@ -80,4 +80,5 @@ public class MenuOption {
 	public int getWidth() { return width; }
 	public int getHeight() { return height; }
 	public String getText() { return text; }
- }
+}
+

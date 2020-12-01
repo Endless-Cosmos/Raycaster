@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 import cosmos.raycaster.Raycaster;
 
-public abstract class  Menu
+public class  Menu
 {
 	protected boolean isVisible = false;
 	protected MenuOption options[];
